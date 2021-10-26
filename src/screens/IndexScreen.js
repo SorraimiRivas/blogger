@@ -2,31 +2,43 @@ import React, { useContext } from "react";
 import { View, Text, StyleSheet, FlatList, Button } from "react-native";
 import { Context } from "../context/BlogContext";
 import { Feather } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-const IndexScreen = ({}) => {
-  const { state, addBlogPosts } = useContext(Context);
+const IndexScreen = ({ navigation }) => {
+  const { state, addBlogPosts, deleteBlogPost } = useContext(Context);
 
   return (
-    <View>
+    <>
       <Button title="Add Post" onPress={addBlogPosts} />
+
       <FlatList
+        showsVerticalScrollIndicator={false}
         data={state}
         keyExtractor={(blogPost) => blogPost.title}
         renderItem={({ item }) => {
           return (
-            <View style={styles.row}>
-              <Text style={styles.title}>{item.title}</Text>
-              <Feather
-                style={styles.icon}
-                name="trash"
-                size={24}
-                color="black"
-              />
-            </View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Show", { id: item.id })}
+            >
+              <View style={styles.row}>
+                <Text style={styles.title}>
+                  {item.title} - {item.id}
+                </Text>
+
+                <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
+                  <Feather
+                    style={styles.icon}
+                    name="trash"
+                    size={24}
+                    color="black"
+                  />
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
           );
         }}
       />
-    </View>
+    </>
   );
 };
 
@@ -43,6 +55,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   icon: {
+    padding: 10,
     fontSize: 24,
   },
 });
