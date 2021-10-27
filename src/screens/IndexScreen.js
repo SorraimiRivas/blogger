@@ -9,8 +9,6 @@ const IndexScreen = ({ navigation }) => {
 
   return (
     <>
-      <Button title="Add Post" onPress={addBlogPosts} />
-
       <FlatList
         showsVerticalScrollIndicator={false}
         data={state}
