@@ -1,16 +1,20 @@
 import React, { useContext } from "react";
-import { View, Text, StyleSheet, FlatList, Button } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import { Context } from "../context/BlogContext";
 import { Feather } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 const IndexScreen = ({ navigation }) => {
-  const { state, addBlogPosts, deleteBlogPost } = useContext(Context);
+  const { state, deleteBlogPost } = useContext(Context);
 
   return (
-    <>
+    <View>
       <FlatList
-        showsVerticalScrollIndicator={false}
         data={state}
         keyExtractor={(blogPost) => blogPost.title}
         renderItem={({ item }) => {
@@ -22,36 +26,23 @@ const IndexScreen = ({ navigation }) => {
                 <Text style={styles.title}>
                   {item.title} - {item.id}
                 </Text>
-
                 <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
-                  <Feather
-                    style={styles.icon}
-                    name="trash"
-                    size={24}
-                    color="black"
-                  />
+                  <Feather style={styles.icon} name="trash" />
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>
           );
         }}
       />
-    </>
+    </View>
   );
 };
 
 IndexScreen.navigationOptions = ({ navigation }) => {
   return {
     headerRight: () => (
-      <TouchableOpacity>
-        <Feather
-          raised
-          style={styles.plusIcon}
-          name="plus"
-          size={28}
-          color="black"
-          onPress={() => navigation.navigate("Create")}
-        />
+      <TouchableOpacity onPress={() => navigation.navigate("Create")}>
+        <Feather style={{ paddingHorizontal: 10 }} name="plus" size={30} />
       </TouchableOpacity>
     ),
   };
@@ -61,8 +52,8 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 10,
     paddingVertical: 20,
+    paddingHorizontal: 10,
     borderBottomWidth: 1,
     borderColor: "gray",
   },
@@ -70,11 +61,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   icon: {
-    padding: 10,
     fontSize: 24,
-  },
-  plusIcon: {
-    marginRight: 10,
   },
 });
 

@@ -12,18 +12,8 @@ const ShowScreen = ({ navigation }) => {
 
   return (
     <View>
-      <Text
-        style={{
-          marginBottom: 15,
-          marginHorizontal: 15,
-          fontSize: 18,
-          fontWeight: "bold",
-          top: 10,
-        }}
-      >
-        {blogPost.title}
-      </Text>
-      <Text style={{ marginHorizontal: 15 }}>{blogPost.content}</Text>
+      <Text>{blogPost.title}</Text>
+      <Text>{blogPost.content}</Text>
     </View>
   );
 };
@@ -31,17 +21,12 @@ const ShowScreen = ({ navigation }) => {
 ShowScreen.navigationOptions = ({ navigation }) => {
   return {
     headerRight: () => (
-      <TouchableOpacity>
-        <Feather
-          style={styles.editIcon}
-          raised
-          name="edit"
-          size={28}
-          color="black"
-          onPress={() =>
-            navigation.navigate("Edit", { id: navigation.getParam("id") })
-          }
-        />
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("Edit", { id: navigation.getParam("id") })
+        }
+      >
+        <Feather style={styles.editIcon} name="edit" size={25} />
       </TouchableOpacity>
     ),
   };
